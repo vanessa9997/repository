@@ -1,0 +1,569 @@
+MariaDB [(none)]> CREATE DATABASE conference;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [(none)]> USE conference;
+Database changed
+MariaDB [conference]> CREATE TABLE participants (
+    -> part_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> name VARCHAR(20) NOT NULL,
+    -> surname VARCHAR(20) NOT NULL,
+    -> degree VARCHAR(20) NOT NULL,
+    -> email VARCHAR(40) NOT NULL,
+    -> NIP INT NOT NULL,
+    -> banquet BOOLEAN NULL,
+    -> trip BOOLEAN NULL );
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [conference]> ALTER TABLE conference CHANGE COLUMN NIP BIGINT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'BIGINT' at line 1
+MariaDB [conference]> ALTER TABLE conference CHANGE COLUMN NIP BIGINT(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'BIGINT(10)' at line 1
+MariaDB [conference]> ALTER TABLE conference CHANGE COLUMN NIP BIGINT(10) NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'BIGINT(10) NOT NULL' at line 1
+MariaDB [conference]> ALTER TABLE conference CHANGE COLUMN NIP CHAR(10) NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'CHAR(10) NOT NULL' at line 1
+MariaDB [conference]> ALTER TABLE participants CHANGE COLUMN NIP BIGINT(10) NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'BIGINT(10) NOT NULL' at line 1
+MariaDB [conference]> ALTER TABLE participants CHANGE COLUMN NIP NIP BIGINT(10) NOT NULL;
+Query OK, 0 rows affected (0.041 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> DESCRIBE participants;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| part_id | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(20) | NO   |     | NULL    |                |
+| surname | varchar(20) | NO   |     | NULL    |                |
+| degree  | varchar(20) | NO   |     | NULL    |                |
+| email   | varchar(40) | NO   |     | NULL    |                |
+| NIP     | bigint(10)  | NO   |     | NULL    |                |
+| banquet | tinyint(1)  | YES  |     | NULL    |                |
+| trip    | tinyint(1)  | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+8 rows in set (0.021 sec)
+
+MariaDB [conference]> ALTER TABLE participants CHANGE COLUMN name VARCHAR(20) NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'VARCHAR(20) NOT NULL' at line 1
+MariaDB [conference]> ALTER TABLE participants CHANGE COLUMN name name VARCHAR(20) NOT NULL;
+Query OK, 0 rows affected (0.015 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> DESCRIBE participants;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| part_id | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(20) | NO   |     | NULL    |                |
+| surname | varchar(20) | NO   |     | NULL    |                |
+| degree  | varchar(20) | NO   |     | NULL    |                |
+| email   | varchar(40) | NO   |     | NULL    |                |
+| NIP     | bigint(10)  | NO   |     | NULL    |                |
+| banquet | tinyint(1)  | YES  |     | NULL    |                |
+| trip    | tinyint(1)  | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+8 rows in set (0.018 sec)
+
+MariaDB [conference]> INSERT INTO participants VALUES
+    -> (1, 'Adam', 'Kowalski', 'doktor', 'kowalski@gmail.com', 1234567892, NULL, NULL);
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [conference]> SHOW participants;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'participants' at line 1
+MariaDB [conference]> SELECT * FROM participants;
++---------+------+----------+--------+--------------------+------------+---------+------+
+| part_id | name | surname  | degree | email              | NIP        | banquet | trip |
++---------+------+----------+--------+--------------------+------------+---------+------+
+|       1 | Adam | Kowalski | doktor | kowalski@gmail.com | 1234567892 |    NULL | NULL |
++---------+------+----------+--------+--------------------+------------+---------+------+
+1 row in set (0.001 sec)
+
+MariaDB [conference]> UPDATE participants 
+    -> SET banquet=TRUE
+    -> WHERE part_id=1;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM participants;
++---------+------+----------+--------+--------------------+------------+---------+------+
+| part_id | name | surname  | degree | email              | NIP        | banquet | trip |
++---------+------+----------+--------+--------------------+------------+---------+------+
+|       1 | Adam | Kowalski | doktor | kowalski@gmail.com | 1234567892 |       1 | NULL |
++---------+------+----------+--------+--------------------+------------+---------+------+
+1 row in set (0.000 sec)
+
+MariaDB [conference]> UPDATE participants 
+    -> SET banquet=FALSE
+    -> WHERE part_id=1;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM participants;
++---------+------+----------+--------+--------------------+------------+---------+------+
+| part_id | name | surname  | degree | email              | NIP        | banquet | trip |
++---------+------+----------+--------+--------------------+------------+---------+------+
+|       1 | Adam | Kowalski | doktor | kowalski@gmail.com | 1234567892 |       0 | NULL |
++---------+------+----------+--------+--------------------+------------+---------+------+
+1 row in set (0.000 sec)
+
+MariaDB [conference]> CREATE TABLE universities (
+    -> uni_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> uni_name VARCHAR(40) NOT NULL,
+    -> city VARCHAR(30) NOT NULL,
+    -> post_code BIGINT(6) NOT NULL,
+    -> country VARCHAR(30) NOT NULL,
+    -> uni_part_id INT,
+    -> FOREIGN KEY(uni_part_id) REFERENCES participants(part_id) );
+Query OK, 0 rows affected (0.023 sec)
+
+MariaDB [conference]> SELECT * universities;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'universities' at line 1
+MariaDB [conference]> SELECT * FROM universities;
+Empty set (0.002 sec)
+
+MariaDB [conference]> DESCRIBE universities;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| uni_id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| uni_name    | varchar(40) | NO   |     | NULL    |                |
+| city        | varchar(30) | NO   |     | NULL    |                |
+| post_code   | bigint(6)   | NO   |     | NULL    |                |
+| country     | varchar(30) | NO   |     | NULL    |                |
+| uni_part_id | int(11)     | YES  | MUL | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.016 sec)
+
+MariaDB [conference]> INSERT INTO participants VALUES (
+    -> 2, 'John', 'Smith', 'profesor', 'smith@gmail.com', 1298375628, NULL, TRUE);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [conference]> SELECT * FROM participants;
++---------+------+----------+----------+--------------------+------------+---------+------+
+| part_id | name | surname  | degree   | email              | NIP        | banquet | trip |
++---------+------+----------+----------+--------------------+------------+---------+------+
+|       1 | Adam | Kowalski | doktor   | kowalski@gmail.com | 1234567892 |       0 | NULL |
+|       2 | John | Smith    | profesor | smith@gmail.com    | 1298375628 |    NULL |    1 |
++---------+------+----------+----------+--------------------+------------+---------+------+
+2 rows in set (0.001 sec)
+
+MariaDB [conference]> INSERT INTO participants VALUES
+    -> (NULL, 'James', 'Miller', 'magister', 'miller
+    '> @gmail.com', 2139873287, TRUE, TRUE),
+    -> (NULL, 'Anna', 'Kowalska', 'profesor', 'kowalska@gmail.com', 1289326532, NULL, NULL),
+    -> (NULL, 'Sarah', 'Davis', 'doktor', 'davis@gmail.com', 2349856743, TRUE, NULL),
+    -> (6, 'Tomas', 'Jones', 'profesor', 'jones@gmail.com', 1982395739, FALSE, TRUE);
+Query OK, 4 rows affected (0.004 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM participants;
++---------+-------+----------+----------+--------------------+------------+---------+------+
+| part_id | name  | surname  | degree   | email              | NIP        | banquet | trip |
++---------+-------+----------+----------+--------------------+------------+---------+------+
+|       1 | Adam  | Kowalski | doktor   | kowalski@gmail.com | 1234567892 |       0 | NULL |
+|       2 | John  | Smith    | profesor | smith@gmail.com    | 1298375628 |    NULL |    1 |
+|       3 | James | Miller   | magister | miller
+@gmail.com  | 2139873287 |       1 |    1 |
+|       4 | Anna  | Kowalska | profesor | kowalska@gmail.com | 1289326532 |    NULL | NULL |
+|       5 | Sarah | Davis    | doktor   | davis@gmail.com    | 2349856743 |       1 | NULL |
+|       6 | Tomas | Jones    | profesor | jones@gmail.com    | 1982395739 |       0 |    1 |
++---------+-------+----------+----------+--------------------+------------+---------+------+
+6 rows in set (0.001 sec)
+
+MariaDB [conference]> UPDATE participants
+    -> SET email='miller@gmail.com'
+    -> WHERE part_id=3;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM participants;
++---------+-------+----------+----------+--------------------+------------+---------+------+
+| part_id | name  | surname  | degree   | email              | NIP        | banquet | trip |
++---------+-------+----------+----------+--------------------+------------+---------+------+
+|       1 | Adam  | Kowalski | doktor   | kowalski@gmail.com | 1234567892 |       0 | NULL |
+|       2 | John  | Smith    | profesor | smith@gmail.com    | 1298375628 |    NULL |    1 |
+|       3 | James | Miller   | magister | miller@gmail.com   | 2139873287 |       1 |    1 |
+|       4 | Anna  | Kowalska | profesor | kowalska@gmail.com | 1289326532 |    NULL | NULL |
+|       5 | Sarah | Davis    | doktor   | davis@gmail.com    | 2349856743 |       1 | NULL |
+|       6 | Tomas | Jones    | profesor | jones@gmail.com    | 1982395739 |       0 |    1 |
++---------+-------+----------+----------+--------------------+------------+---------+------+
+6 rows in set (0.001 sec)
+
+MariaDB [conference]> INSERT INTO universities VALUES
+    -> (NULL, 'Politechnika Gdaäska', 'Gdaäsk', '80244', 'Polska', NULL);
+Query OK, 1 row affected, 2 warnings (0.004 sec)
+
+MariaDB [conference]> SELECT * FROM universities;
++--------+----------------------+--------+-----------+---------+-------------+
+| uni_id | uni_name             | city   | post_code | country | uni_part_id |
++--------+----------------------+--------+-----------+---------+-------------+
+|      1 | Politechnika Gda?ska | Gda?sk |     80244 | Polska  |        NULL |
++--------+----------------------+--------+-----------+---------+-------------+
+1 row in set (0.001 sec)
+
+MariaDB [conference]> ALTER DATABASE conference DEFAULT CHARACTER SET utf8 COLLATE utf_polish_ci;
+ERROR 1273 (HY000): Unknown collation: 'utf_polish_ci'
+MariaDB [conference]> ALTER DATABASE conference DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [conference]> SELECT * FROM universities;
++--------+----------------------+--------+-----------+---------+-------------+
+| uni_id | uni_name             | city   | post_code | country | uni_part_id |
++--------+----------------------+--------+-----------+---------+-------------+
+|      1 | Politechnika Gda?ska | Gda?sk |     80244 | Polska  |        NULL |
++--------+----------------------+--------+-----------+---------+-------------+
+1 row in set (0.001 sec)
+
+MariaDB [conference]> UPDATE universities
+    -> SET uni_name= 'Politechnika Gdaäska'
+    -> WHERE uni_id=1;
+Query OK, 0 rows affected, 1 warning (0.001 sec)
+Rows matched: 1  Changed: 0  Warnings: 1
+
+MariaDB [conference]> SELECT * FROM universities;
++--------+----------------------+--------+-----------+---------+-------------+
+| uni_id | uni_name             | city   | post_code | country | uni_part_id |
++--------+----------------------+--------+-----------+---------+-------------+
+|      1 | Politechnika Gda?ska | Gda?sk |     80244 | Polska  |        NULL |
++--------+----------------------+--------+-----------+---------+-------------+
+1 row in set (0.000 sec)
+
+MariaDB [conference]> UPDATE universities
+    -> SET uni_name= 'Politechnika Gdanska' AND city='Gdansk'
+    -> WHERE uni_id=1;
+Query OK, 1 row affected, 2 warnings (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 2
+
+MariaDB [conference]> SELECT * FROM universities;
++--------+----------+--------+-----------+---------+-------------+
+| uni_id | uni_name | city   | post_code | country | uni_part_id |
++--------+----------+--------+-----------+---------+-------------+
+|      1 | 0        | Gda?sk |     80244 | Polska  |        NULL |
++--------+----------+--------+-----------+---------+-------------+
+1 row in set (0.000 sec)
+
+MariaDB [conference]> UPDATE universities
+    -> SET uni_name= 'Politechnika Gdanska'
+    -> WHERE uni_id=1;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM universities;
++--------+----------------------+--------+-----------+---------+-------------+
+| uni_id | uni_name             | city   | post_code | country | uni_part_id |
++--------+----------------------+--------+-----------+---------+-------------+
+|      1 | Politechnika Gdanska | Gda?sk |     80244 | Polska  |        NULL |
++--------+----------------------+--------+-----------+---------+-------------+
+1 row in set (0.000 sec)
+
+MariaDB [conference]> UPDATE universities
+    -> SET city = 'Gdansk'
+    -> WHERE uni_id=1;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM universities;
++--------+----------------------+--------+-----------+---------+-------------+
+| uni_id | uni_name             | city   | post_code | country | uni_part_id |
++--------+----------------------+--------+-----------+---------+-------------+
+|      1 | Politechnika Gdanska | Gdansk |     80244 | Polska  |        NULL |
++--------+----------------------+--------+-----------+---------+-------------+
+1 row in set (0.000 sec)
+
+MariaDB [conference]> INSERT INTO universities VALUES 
+    -> (NULL, Uniwersytet Nowojorski', 'Nowy Jork', '56734', 'USA', 3),
+    '> (NULL, Uniwersytet w Madrycie', 'Madryt', '76854', 'Hiszpania', NULL),
+    -> 
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Nowojorski', 'Nowy Jork', '56734', 'USA', 3),
+(NULL, Uniwersytet w Madrycie',...' at line 2
+MariaDB [conference]> INSERT INTO universities VALUES 
+    -> (NULL, 'Uniwersytet Nowojorski', 'Nowy Jork', '56734', 'USA', 3),
+    -> (NULL, 'Uniwersytet w Madrycie', 'Madryt', '76854', 'Hiszpania', NULL);
+Query OK, 2 rows affected (0.004 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> INSERT INTO universities VALUES 
+    -> (NULL, 'Uniwersytet Stanforda', 'Stanford', '56456', 'USA', 3),
+    -> (NULL, 'Uniwersytet Gdanski', 'Gdansk', '80244', 'Polska', 1),
+    -> (NULL, 'Politechnika Warszawska', 'Warszawa', '01475', 'Polska', 4);
+Query OK, 3 rows affected (0.003 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> INSERT INTO universities VALUES 
+    -> (NULL, 'Uniwersytet Edynburski', 'Edynburg', 34598, 'Wielka Brytania', 2);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [conference]> INSERT INTO universities VALUES 
+    -> (NULL, 'Uniwersytet Yale', 'New Haven', 89648, 'USA', 5),
+    -> (NULL, 'Uniwersytet Columbia', 'Nowy Jork', 56734, 'USA', 6);
+Query OK, 2 rows affected (0.003 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM universities;
++--------+-------------------------+-----------+-----------+-----------------+-------------+
+| uni_id | uni_name                | city      | post_code | country         | uni_part_id |
++--------+-------------------------+-----------+-----------+-----------------+-------------+
+|      1 | Politechnika Gdanska    | Gdansk    |     80244 | Polska          |        NULL |
+|      2 | Uniwersytet Nowojorski  | Nowy Jork |     56734 | USA             |           3 |
+|      3 | Uniwersytet w Madrycie  | Madryt    |     76854 | Hiszpania       |        NULL |
+|      4 | Uniwersytet Stanforda   | Stanford  |     56456 | USA             |           3 |
+|      5 | Uniwersytet Gdanski     | Gdansk    |     80244 | Polska          |           1 |
+|      6 | Politechnika Warszawska | Warszawa  |      1475 | Polska          |           4 |
+|      7 | Uniwersytet Edynburski  | Edynburg  |     34598 | Wielka Brytania |           2 |
+|      8 | Uniwersytet Yale        | New Haven |     89648 | USA             |           5 |
+|      9 | Uniwersytet Columbia    | Nowy Jork |     56734 | USA             |           6 |
++--------+-------------------------+-----------+-----------+-----------------+-------------+
+9 rows in set (0.001 sec)
+
+MariaDB [conference]> CREATE TABLE papers(
+    -> paper_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> title VARCHAR(60) NOT NULL,
+    -> day VARCHAR(10) NOT NULL,
+    -> author_id INT,
+    -> FOREIGN KEY (author_id) REFERENCES participants(part_id) );
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [conference]> DESCRIBE papers;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| paper_id  | int(11)     | NO   | PRI | NULL    | auto_increment |
+| title     | varchar(60) | NO   |     | NULL    |                |
+| day       | varchar(10) | NO   |     | NULL    |                |
+| author_id | int(11)     | YES  | MUL | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.023 sec)
+
+MariaDB [conference]> DESCRIBE universities;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| uni_id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| uni_name    | varchar(40) | NO   |     | NULL    |                |
+| city        | varchar(30) | NO   |     | NULL    |                |
+| post_code   | bigint(6)   | NO   |     | NULL    |                |
+| country     | varchar(30) | NO   |     | NULL    |                |
+| uni_part_id | int(11)     | YES  | MUL | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.021 sec)
+
+MariaDB [conference]> INSERT INTO papers VALUES
+    -> (NULL, 'Elektrownie wodne', 'czwartek', 1),
+    -> (NULL, 'Budownictwo w Nowym Jorku', 'wtorek', 6),
+    -> (NULL, 'Fauna Ameryki Poludniowej', 'piatek', 3),
+    -> (NULL, 'Historia Afryki', 'poniedzialek', 5),
+    -> (NULL, 'Ewolucja', 'sroda', 2);
+Query OK, 5 rows affected, 1 warning (0.005 sec)
+Records: 5  Duplicates: 0  Warnings: 1
+
+MariaDB [conference]> SELECT * FROM papers;
++----------+---------------------------+------------+-----------+
+| paper_id | title                     | day        | author_id |
++----------+---------------------------+------------+-----------+
+|        1 | Elektrownie wodne         | czwartek   |         1 |
+|        2 | Budownictwo w Nowym Jorku | wtorek     |         6 |
+|        3 | Fauna Ameryki Poludniowej | piatek     |         3 |
+|        4 | Historia Afryki           | poniedzial |         5 |
+|        5 | Ewolucja                  | sroda      |         2 |
++----------+---------------------------+------------+-----------+
+5 rows in set (0.001 sec)
+
+MariaDB [conference]> CREATE TABLE fees (
+    -> fee_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> amount FLOAT NOT NULL,
+    -> payment BOOLEAN,
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 4
+MariaDB [conference]> CREATE TABLE fees (
+    -> fee_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> amount FLOAT NOT NULL,
+    -> is_paid BOOLEAN,
+    -> part_id INT,
+    -> FOREIGN KEY(part_id) REFERENCES participants(part_id) );
+Query OK, 0 rows affected (0.017 sec)
+
+MariaDB [conference]> DESRIBE fees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DESRIBE fees' at line 1
+MariaDB [conference]> DESCRIBE fees;
++---------+------------+------+-----+---------+----------------+
+| Field   | Type       | Null | Key | Default | Extra          |
++---------+------------+------+-----+---------+----------------+
+| fee_id  | int(11)    | NO   | PRI | NULL    | auto_increment |
+| amount  | float      | NO   |     | NULL    |                |
+| is_paid | tinyint(1) | YES  |     | NULL    |                |
+| part_id | int(11)    | YES  | MUL | NULL    |                |
++---------+------------+------+-----+---------+----------------+
+4 rows in set (0.012 sec)
+
+MariaDB [conference]> INSERT INTO fees VALUES 
+    -> (1, 85.90, TRUE, 1),
+    -> (2, 85.90, FALSE, 4), 
+    -> (3, 105.90, TRUE, 3),
+    -> (4, 85.90, FALSE, 2);
+Query OK, 4 rows affected (0.005 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM fees;
++--------+--------+---------+---------+
+| fee_id | amount | is_paid | part_id |
++--------+--------+---------+---------+
+|      1 |   85.9 |       1 |       1 |
+|      2 |   85.9 |       0 |       4 |
+|      3 |  105.9 |       1 |       3 |
+|      4 |   85.9 |       0 |       2 |
++--------+--------+---------+---------+
+4 rows in set (0.001 sec)
+
+MariaDB [conference]> CREATE TABLE rooms (
+    -> room_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> number INT NOT NULL,
+    -> type VARCHAR(10));
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [conference]> DESCRIBE rooms;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| room_id | int(11)     | NO   | PRI | NULL    | auto_increment |
+| number  | int(11)     | NO   |     | NULL    |                |
+| type    | varchar(10) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+3 rows in set (0.012 sec)
+
+MariaDB [conference]> INSERT INTO rooms VALUES 
+    -> (NULL, 22, single),
+    -> (NULL, 15, double),
+    -> (NULL, 34, double),
+    -> (NULL, 19, single),
+    -> (NULL, 5, double);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'double),
+(NULL, 34, double),
+(NULL, 19, single),
+(NULL, 5, double)' at line 3
+MariaDB [conference]> INSERT INTO rooms VALUES 
+    -> (NULL, 22, 'single'),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2
+MariaDB [conference]> ALTER TABLE rooms CHANGE COLUMN type single_double CHAR(1);
+Query OK, 0 rows affected (0.051 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> DESCRIBE rooms;
++---------------+---------+------+-----+---------+----------------+
+| Field         | Type    | Null | Key | Default | Extra          |
++---------------+---------+------+-----+---------+----------------+
+| room_id       | int(11) | NO   | PRI | NULL    | auto_increment |
+| number        | int(11) | NO   |     | NULL    |                |
+| single_double | char(1) | YES  |     | NULL    |                |
++---------------+---------+------+-----+---------+----------------+
+3 rows in set (0.013 sec)
+
+MariaDB [conference]> INSERT INTO rooms VALUES 
+    -> (NULL, 22, 's'),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2
+MariaDB [conference]> INSERT INTO rooms VALUES 
+    -> (NULL, 22, 'S'),
+    -> (NULL, 5, 'D'),
+    -> (NULL, 19, 'S'),
+    -> (NULL, 34, 'D'),
+    -> (NULL, 15, 'D');
+Query OK, 5 rows affected (0.002 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM rooms;
++---------+--------+---------------+
+| room_id | number | single_double |
++---------+--------+---------------+
+|       1 |     22 | S             |
+|       2 |      5 | D             |
+|       3 |     19 | S             |
+|       4 |     34 | D             |
+|       5 |     15 | D             |
++---------+--------+---------------+
+5 rows in set (0.001 sec)
+
+MariaDB [conference]> CREATE TABLE part_rooms (
+    -> part_room_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> day VARCHAR(10),
+    -> room_id INT,
+    -> part_id INT,
+    -> FOREIGN KEY(room_id) REFERENCES rooms(room_id),
+    -> FOREIGN KEY(part_id) REFERENCES participants(part_id) );
+Query OK, 0 rows affected (0.025 sec)
+
+MariaDB [conference]> DESCRIBE part_rooms;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| part_room_id | int(11)     | NO   | PRI | NULL    | auto_increment |
+| day          | varchar(10) | YES  |     | NULL    |                |
+| room_id      | int(11)     | YES  | MUL | NULL    |                |
+| part_id      | int(11)     | YES  | MUL | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.021 sec)
+
+MariaDB [conference]> INSERT INTO part_rooms VALUES 
+    -> (1, 'poniedzialek', 1, 6);
+Query OK, 1 row affected, 1 warning (0.002 sec)
+
+MariaDB [conference]> INSERT INTO part_rooms VALUES 
+    -> (NULL, 'sroda', 5, 3), 
+    -> (NULL, 'sroda', 5, 4);
+Query OK, 2 rows affected (0.003 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> INSERT INTO part_rooms VALUES 
+    -> (NULL, 'czwartek', 3, 2),
+    -> (NULL, 'wtorek', 4, 1);
+Query OK, 2 rows affected (0.004 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM part_rooms;
++--------------+------------+---------+---------+
+| part_room_id | day        | room_id | part_id |
++--------------+------------+---------+---------+
+|            1 | poniedzial |       1 |       6 |
+|            2 | sroda      |       5 |       3 |
+|            3 | sroda      |       5 |       4 |
+|            4 | czwartek   |       3 |       2 |
+|            5 | wtorek     |       4 |       1 |
++--------------+------------+---------+---------+
+5 rows in set (0.001 sec)
+
+MariaDB [conference]> ALTER TABLE part_rooms CHANGE COLUMN day day VARCHAR(15);
+Query OK, 0 rows affected (0.020 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM part_rooms;
++--------------+------------+---------+---------+
+| part_room_id | day        | room_id | part_id |
++--------------+------------+---------+---------+
+|            1 | poniedzial |       1 |       6 |
+|            2 | sroda      |       5 |       3 |
+|            3 | sroda      |       5 |       4 |
+|            4 | czwartek   |       3 |       2 |
+|            5 | wtorek     |       4 |       1 |
++--------------+------------+---------+---------+
+5 rows in set (0.001 sec)
+
+MariaDB [conference]> UPDATE part_rooms 
+    -> SET day='poniedzialek'
+    -> WHERE part_room_id=1;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [conference]> SELECT * FROM part_rooms;
++--------------+--------------+---------+---------+
+| part_room_id | day          | room_id | part_id |
++--------------+--------------+---------+---------+
+|            1 | poniedzialek |       1 |       6 |
+|            2 | sroda        |       5 |       3 |
+|            3 | sroda        |       5 |       4 |
+|            4 | czwartek     |       3 |       2 |
+|            5 | wtorek       |       4 |       1 |
++--------------+--------------+---------+---------+
+5 rows in set (0.001 sec)
+
+MariaDB [conference]> TEE konferencja_zapytania.txt

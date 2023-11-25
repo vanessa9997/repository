@@ -1,0 +1,43 @@
+MariaDB [conference]> SELECT title FROM papers
+    -> WHERE day='czwartek';
++-------------------+
+| title             |
++-------------------+
+| Elektrownie wodne |
++-------------------+
+1 row in set (0.003 sec)
+
+MariaDB [conference]> SELECT city, post_code, country
+    -> FROM universities, part_rooms
+    -> WHERE universities.uni_part_id=part_rooms.part_id
+    -> AND part_rooms.day='sroda';
++-----------+-----------+---------+
+| city      | post_code | country |
++-----------+-----------+---------+
+| Nowy Jork |     56734 | USA     |
+| Stanford  |     56456 | USA     |
+| Warszawa  |      1475 | Polska  |
++-----------+-----------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [conference]> SELECT COUNT(*) FROM papers;
++----------+
+| COUNT(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.001 sec)
+
+MariaDB [conference]> SELECT name, surname 
+    -> FROM participants as p, rooms as r, part_rooms as pr
+    -> WHERE p.part_id=pr.part_id AND r.room_id=pr.room_id
+    -> AND r.single_double='S';
++-------+---------+
+| name  | surname |
++-------+---------+
+| Tomas | Jones   |
+| John  | Smith   |
++-------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [conference]> EXIT

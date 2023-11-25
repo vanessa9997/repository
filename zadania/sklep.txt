@@ -1,0 +1,642 @@
+MariaDB [(none)]> SELECT CURRENT_DATE();
++----------------+
+| CURRENT_DATE() |
++----------------+
+| 2023-03-21     |
++----------------+
+1 row in set (0.001 sec)
+
+MariaDB [(none)]> SELECT CURRENT_TIME();
++----------------+
+| CURRENT_TIME() |
++----------------+
+| 04:38:09       |
++----------------+
+1 row in set (0.000 sec)
+
+MariaDB [(none)]> CREATE DATABASE sklep_db
+    -> DEFAULT CHARACTER SET utf8
+    -> DEFAULT COLLATE utf8_polish_ci;
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [(none)]> CREATE USER 'sklep_user'@'localhost' IDENTIFIED BY 'haslo';
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON sklep_db.* TO 'sklep_user'@'localhost';
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [(none)]> EXIT
+MariaDB [(none)]> USE sklep_db;
+Database changed
+MariaDB [sklep_db]> CREATE TABLE Customers (
+    -> customer_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> name VARCHAR(30) NOT NULL,
+    -> adress VARCHAR(40),
+    -> city VARCHAR(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 5
+MariaDB [sklep_db]> CREATE TABLE Customers (
+    -> customer_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> name VARCHAR(30) NOT NULL,
+    -> adress VARCHAR(40),
+    -> city VARCHAR(30) );
+Query OK, 0 rows affected (0.019 sec)
+
+MariaDB [sklep_db]> INSERT INTO Customers VALUES
+    -> (1, 'Jan Rybak', 'Banacha 23', 'Lodz'),
+    -> (2, 'Urszula Nowak', 'Sienkiewicza 234/45', 'Warszawa'),
+    -> (3, 'Katarzyna Kowalska', 'Kossaka 113', 'Pabianice'),
+    -> (4, 'Ewa Lipinska', 'Mickiewicza 23', 'Wroclaw'),
+    -> (5, 'Marek Kucharski', 'Kwiatowa 45/21', 'Poznan'),
+    -> (6, 'Marta Kucharska', 'Akacjowa 1', 'Sopot'),
+    -> (7, 'Wojciech Drozd', 'Lipowa 18', 'Wejcherowo'),
+    -> (8, 'Piotr Wojciechowski', 'Bema 113/2', 'Wadowice'),
+    -> (9, 'Monika Grzemska', 'Liliowa 457/3', 'Olsztyn'),
+    -> (10, 'Damian Budka', 'Rowerowa 13', 'Kielce');
+Query OK, 10 rows affected (0.040 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+MariaDB [sklep_db]> CREATE TABLE Orders (
+    -> order_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> customer_id INT,
+    -> amount INT,
+    -> date DATE,
+    -> FOREIGN KEY(customer_id) REFERENCES Customers(customer_id) );
+Query OK, 0 rows affected (0.026 sec)
+
+MariaDB [sklep_db]> INSERT INTO Orders VALUES 
+    -> (1, 2, 88, 2004/05/22);
+Query OK, 1 row affected, 1 warning (0.007 sec)
+
+MariaDB [sklep_db]> INSERT INTO Orders VALUES
+    -> (2, 1, 33, 2004/04/13),
+    -> (3, 2, 21, 2004/08/12),
+    -> (4, 8, 11, 2004/06/15),
+    -> (5, 3, 6, 2004/06/19),
+    -> (6, 6, 24, 2004/07/04),
+    -> (7, 5, 90, 2004/05/14),
+    -> (8, 7, 65, 2004/08/23),
+    -> (9, 3, 45, 2004/02/01),
+    -> (10, 9, 2, 2004/09/21);
+Query OK, 9 rows affected, 8 warnings (0.010 sec)
+Records: 9  Duplicates: 0  Warnings: 8
+
+MariaDB [sklep_db]> DESCRIBE Customers;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| customer_id | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(30) | NO   |     | NULL    |                |
+| adress      | varchar(40) | YES  |     | NULL    |                |
+| city        | varchar(30) | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.015 sec)
+
+MariaDB [sklep_db]> DESCRIBE Orders;
++-------------+---------+------+-----+---------+----------------+
+| Field       | Type    | Null | Key | Default | Extra          |
++-------------+---------+------+-----+---------+----------------+
+| order_id    | int(11) | NO   | PRI | NULL    | auto_increment |
+| customer_id | int(11) | YES  | MUL | NULL    |                |
+| amount      | int(11) | YES  |     | NULL    |                |
+| date        | date    | YES  |     | NULL    |                |
++-------------+---------+------+-----+---------+----------------+
+4 rows in set (0.016 sec)
+
+MariaDB [sklep_db]> SELECT * FROM Customers;
++-------------+---------------------+---------------------+------------+
+| customer_id | name                | adress              | city       |
++-------------+---------------------+---------------------+------------+
+|           1 | Jan Rybak           | Banacha 23          | Lodz       |
+|           2 | Urszula Nowak       | Sienkiewicza 234/45 | Warszawa   |
+|           3 | Katarzyna Kowalska  | Kossaka 113         | Pabianice  |
+|           4 | Ewa Lipinska        | Mickiewicza 23      | Wroclaw    |
+|           5 | Marek Kucharski     | Kwiatowa 45/21      | Poznan     |
+|           6 | Marta Kucharska     | Akacjowa 1          | Sopot      |
+|           7 | Wojciech Drozd      | Lipowa 18           | Wejcherowo |
+|           8 | Piotr Wojciechowski | Bema 113/2          | Wadowice   |
+|           9 | Monika Grzemska     | Liliowa 457/3       | Olsztyn    |
+|          10 | Damian Budka        | Rowerowa 13         | Kielce     |
++-------------+---------------------+---------------------+------------+
+10 rows in set (0.003 sec)
+
+MariaDB [sklep_db]> SELECT * FROM Orders;
++----------+-------------+--------+------------+
+| order_id | customer_id | amount | date       |
++----------+-------------+--------+------------+
+|        1 |           2 |     88 | 0000-00-00 |
+|        2 |           1 |     33 | 0000-00-00 |
+|        3 |           2 |     21 | 0000-00-00 |
+|        4 |           8 |     11 | 0000-00-00 |
+|        5 |           3 |      6 | 0000-00-00 |
+|        6 |           6 |     24 | 0000-00-00 |
+|        7 |           5 |     90 | 0000-00-00 |
+|        8 |           7 |     65 | 0000-00-00 |
+|        9 |           3 |     45 | 2000-10-02 |
+|       10 |           9 |      2 | 0000-00-00 |
++----------+-------------+--------+------------+
+10 rows in set (0.001 sec)
+
+MariaDB [sklep_db]> INSERT INTO Orders(date) VALUES 
+    -> (1, 2004-05-22);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-05-22'
+    -> WHERE order_id=1;
+Query OK, 1 row affected (0.006 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> SELECT * FROM Orders;
++----------+-------------+--------+------------+
+| order_id | customer_id | amount | date       |
++----------+-------------+--------+------------+
+|        1 |           2 |     88 | 2004-05-22 |
+|        2 |           1 |     33 | 0000-00-00 |
+|        3 |           2 |     21 | 0000-00-00 |
+|        4 |           8 |     11 | 0000-00-00 |
+|        5 |           3 |      6 | 0000-00-00 |
+|        6 |           6 |     24 | 0000-00-00 |
+|        7 |           5 |     90 | 0000-00-00 |
+|        8 |           7 |     65 | 0000-00-00 |
+|        9 |           3 |     45 | 2000-10-02 |
+|       10 |           9 |      2 | 0000-00-00 |
++----------+-------------+--------+------------+
+10 rows in set (0.000 sec)
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-04-13'
+    -> WHERE order_id=2;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-08-12'
+    -> WHERE order_id=3;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-06-15'
+    -> WHERE order_id=4;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-06-19'
+    -> WHERE order_id=5;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-07-04'
+    -> WHERE order_id=6;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-05-14'
+    -> WHERE order_id=7;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-08-23'
+    -> WHERE order_id=8;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-02-01'
+    -> WHERE order_id=9;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2004-09-21'
+    -> WHERE order_id=10;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> SELECT * FROM Orders;
++----------+-------------+--------+------------+
+| order_id | customer_id | amount | date       |
++----------+-------------+--------+------------+
+|        1 |           2 |     88 | 2004-05-22 |
+|        2 |           1 |     33 | 2004-04-13 |
+|        3 |           2 |     21 | 2004-08-12 |
+|        4 |           8 |     11 | 2004-06-15 |
+|        5 |           3 |      6 | 2004-06-19 |
+|        6 |           6 |     24 | 2004-07-04 |
+|        7 |           5 |     90 | 2004-05-14 |
+|        8 |           7 |     65 | 2004-08-23 |
+|        9 |           3 |     45 | 2004-02-01 |
+|       10 |           9 |      2 | 2004-09-21 |
++----------+-------------+--------+------------+
+10 rows in set (0.001 sec)
+
+MariaDB [sklep_db]> SELECT adress FROM Customers WHERE name LIKE 'P%';
++------------+
+| adress     |
++------------+
+| Bema 113/2 |
++------------+
+1 row in set (0.004 sec)
+
+MariaDB [sklep_db]> SELECT customer_id, name Customers WHERE name LIKE 'P%'
+    -> AND 'city'='Warszawa';
+ERROR 1054 (42S22): Unknown column 'customer_id' in 'field list'
+MariaDB [sklep_db]> SELECT customer_id, name FROM Customers WHERE name LIKE 'P%'
+    -> AND 'city'='Warszawa';
+Empty set (0.004 sec)
+
+MariaDB [sklep_db]> SELECT customer_id, name FROM Customers WHERE name LIKE 'M%'
+    -> AND 'city'='Sopot';
+Empty set (0.000 sec)
+
+MariaDB [sklep_db]> SELECT customer_id, name FROM Customers WHERE name LIKE 'M%'
+    -> AND 'city'='Olsztyn';
+Empty set (0.000 sec)
+
+MariaDB [sklep_db]> SELECT customer_id, name FROM Customers WHERE name='M%'
+    -> AND 'city'='Olsztyn';
+Empty set (0.001 sec)
+
+MariaDB [sklep_db]> SELECT customer_id, name FROM Customers WHERE name LIKE 'M%'
+    -> AND city LIKE Olsztyn';
+    '> ;
+    '> ;;
+    '> 
+    '> 
+    '> 
+    '> SELECT customer_id, name FROM Customers WHERE name LIKE 'M%'
+    '> AND city LIKE 'Olsztyn';
+    '> AND city LIKE 'Olsztyn';
+    '> 
+MariaDB [(none)]> USE sklep_db;
+Database changed
+MariaDB [sklep_db]> SELECT customer_id, name FROM Customers
+    -> WHERE name LIKE 'P%' AND adress='Sopot';
+Empty set (0.008 sec)
+
+MariaDB [sklep_db]> MariaDB [sklep_db]> SELECT customer_id, name FROM Customers 
+    -> WHERE name LIKE 'P%'
+    -> AND city='Sopot';
+Empty set (0.001 sec)
+
+MariaDB [sklep_db]> MariaDB [sklep_db]> SELECT customer_id, name FROM Customers 
+    -> WHERE name LIKE 'M%'
+    -> AND city='Sopot';
++-------------+-----------------+
+| customer_id | name            |
++-------------+-----------------+
+|           6 | Marta Kucharska |
++-------------+-----------------+
+1 row in set (0.002 sec)
+
+MariaDB [sklep_db]> SELECT * FROM Orders ORDER BY amount DESC;
++----------+-------------+--------+------------+
+| order_id | customer_id | amount | date       |
++----------+-------------+--------+------------+
+|        7 |           5 |     90 | 2004-05-14 |
+|        1 |           2 |     88 | 2004-05-22 |
+|        8 |           7 |     65 | 2004-08-23 |
+|        9 |           3 |     45 | 2004-02-01 |
+|        2 |           1 |     33 | 2004-04-13 |
+|        6 |           6 |     24 | 2004-07-04 |
+|        3 |           2 |     21 | 2004-08-12 |
+|        4 |           8 |     11 | 2004-06-15 |
+|        5 |           3 |      6 | 2004-06-19 |
+|       10 |           9 |      2 | 2004-09-21 |
++----------+-------------+--------+------------+
+10 rows in set (0.003 sec)
+
+MariaDB [sklep_db]> SELECT * FROM Orders
+    -> LIMIT 5 DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DESC' at line 2
+MariaDB [sklep_db]> SELECT * FROM Orders
+    -> ORDER BY date
+    -> DESC
+    -> LIMIT 5;
++----------+-------------+--------+------------+
+| order_id | customer_id | amount | date       |
++----------+-------------+--------+------------+
+|       10 |           9 |      2 | 2004-09-21 |
+|        8 |           7 |     65 | 2004-08-23 |
+|        3 |           2 |     21 | 2004-08-12 |
+|        6 |           6 |     24 | 2004-07-04 |
+|        5 |           3 |      6 | 2004-06-19 |
++----------+-------------+--------+------------+
+5 rows in set (0.002 sec)
+
+MariaDB [sklep_db]> SELECT * FROM Orders
+    -> WHERE date BETWEEN '2004-08-01' AND NOW();
++----------+-------------+--------+------------+
+| order_id | customer_id | amount | date       |
++----------+-------------+--------+------------+
+|        3 |           2 |     21 | 2004-08-12 |
+|        8 |           7 |     65 | 2004-08-23 |
+|       10 |           9 |      2 | 2004-09-21 |
++----------+-------------+--------+------------+
+3 rows in set (0.004 sec)
+
+MariaDB [sklep_db]> SELECT * FROM Customers
+    -> WHERE city='Gdansk' OR city='Warszawa';
++-------------+---------------+---------------------+----------+
+| customer_id | name          | adress              | city     |
++-------------+---------------+---------------------+----------+
+|           2 | Urszula Nowak | Sienkiewicza 234/45 | Warszawa |
++-------------+---------------+---------------------+----------+
+1 row in set (0.003 sec)
+
+MariaDB [sklep_db]> SELECT name, adress, date FROM Customers, Orders
+    -> WHERE customer_id=customer_id;
+ERROR 1052 (23000): Column 'customer_id' in where clause is ambiguous
+MariaDB [sklep_db]> SELECT name, adress, date FROM Customers, Orders
+    -> WHERE Customers.customer_id=Orders.customer_id;
++---------------------+---------------------+------------+
+| name                | adress              | date       |
++---------------------+---------------------+------------+
+| Urszula Nowak       | Sienkiewicza 234/45 | 2004-05-22 |
+| Jan Rybak           | Banacha 23          | 2004-04-13 |
+| Urszula Nowak       | Sienkiewicza 234/45 | 2004-08-12 |
+| Piotr Wojciechowski | Bema 113/2          | 2004-06-15 |
+| Katarzyna Kowalska  | Kossaka 113         | 2004-06-19 |
+| Marta Kucharska     | Akacjowa 1          | 2004-07-04 |
+| Marek Kucharski     | Kwiatowa 45/21      | 2004-05-14 |
+| Wojciech Drozd      | Lipowa 18           | 2004-08-23 |
+| Katarzyna Kowalska  | Kossaka 113         | 2004-02-01 |
+| Monika Grzemska     | Liliowa 457/3       | 2004-09-21 |
++---------------------+---------------------+------------+
+10 rows in set (0.004 sec)
+
+MariaDB [sklep_db]> SELECT name FROM Customers
+    -> WHERE Orders.amount>50;
+ERROR 1054 (42S22): Unknown column 'Orders.amount' in 'where clause'
+MariaDB [sklep_db]> SELECT name FROM Customers
+    -> WHERE Orders.amount>'50';
+ERROR 1054 (42S22): Unknown column 'Orders.amount' in 'where clause'
+MariaDB [sklep_db]> SELECT name FROM Customers
+    -> WHERE ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2
+MariaDB [sklep_db]> SELECT name FROM Orders
+    -> WHERE Orders.amount>50;
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+MariaDB [sklep_db]> SELECT name FROM Customers
+    -> WHERE Orders.(amount>50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(amount>50)' at line 2
+MariaDB [sklep_db]> SELECT name FROM Customers, Orders
+    -> WHERE Orders.amount 
+    -> >50;
++---------------------+
+| name                |
++---------------------+
+| Jan Rybak           |
+| Urszula Nowak       |
+| Katarzyna Kowalska  |
+| Ewa Lipinska        |
+| Marek Kucharski     |
+| Marta Kucharska     |
+| Wojciech Drozd      |
+| Piotr Wojciechowski |
+| Monika Grzemska     |
+| Damian Budka        |
+| Jan Rybak           |
+| Urszula Nowak       |
+| Katarzyna Kowalska  |
+| Ewa Lipinska        |
+| Marek Kucharski     |
+| Marta Kucharska     |
+| Wojciech Drozd      |
+| Piotr Wojciechowski |
+| Monika Grzemska     |
+| Damian Budka        |
+| Jan Rybak           |
+| Urszula Nowak       |
+| Katarzyna Kowalska  |
+| Ewa Lipinska        |
+| Marek Kucharski     |
+| Marta Kucharska     |
+| Wojciech Drozd      |
+| Piotr Wojciechowski |
+| Monika Grzemska     |
+| Damian Budka        |
++---------------------+
+30 rows in set (0.002 sec)
+
+MariaDB [sklep_db]> SELECT name FROM Customers, Orders
+    -> WHERE Customers.customer_id = Orders.customer_id
+    -> WHERE Orders.amount >50;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE Orders.amount >50' at line 3
+MariaDB [sklep_db]> SELECT name FROM Customers, Orders
+    -> WHERE Customers.customer_id = Orders.customer_id
+    -> WHERE amount>50;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE amount>50' at line 3
+MariaDB [sklep_db]> SELECT name FROM Customers, Orders
+    -> WHERE Customers.customer_id = Orders.customer_id
+    -> AND Orders.amount>50;
++-----------------+
+| name            |
++-----------------+
+| Urszula Nowak   |
+| Marek Kucharski |
+| Wojciech Drozd  |
++-----------------+
+3 rows in set (0.001 sec)
+
+MariaDB [sklep_db]> SELECT city FROM Customers, Orders
+    -> WHERE Orders.date='4004-08-12';
+Empty set (0.002 sec)
+
+MariaDB [sklep_db]> SELECT city FROM Customers, Orders
+    -> WHERE Orders.date='2004-08-12';
++------------+
+| city       |
++------------+
+| Lodz       |
+| Warszawa   |
+| Pabianice  |
+| Wroclaw    |
+| Poznan     |
+| Sopot      |
+| Wejcherowo |
+| Wadowice   |
+| Olsztyn    |
+| Kielce     |
++------------+
+10 rows in set (0.001 sec)
+
+MariaDB [sklep_db]> SELECT city FROM Customers, Orders
+    -> WHERE Customers.customer_id=Orders.customer_id
+    -> AND Orders.date='2004-08-12';
++----------+
+| city     |
++----------+
+| Warszawa |
++----------+
+1 row in set (0.001 sec)
+
+MariaDB [sklep_db]> SELECT city FROM Customers, Orders
+    -> WHERE Customers.customer_id = Orders.customer_id
+    -> AND ORDER BY date DESC
+    -> LIMIT 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY date DESC
+LIMIT 5' at line 3
+MariaDB [sklep_db]> SELECT city FROM Customers, Orders
+    -> WHERE Customers.customer_id=Orders.customer_id
+    -> AND ORDER BY Orders.date DESC
+    -> LIMIT 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY Orders.date DESC
+LIMIT 5' at line 3
+MariaDB [sklep_db]> SELECT city FROM Customers, Orders
+    -> WHERE Customers.customer_id=Orders.customer_id
+    -> ORDER BY Orders.date DESC
+    -> LIMIT 5;
++------------+
+| city       |
++------------+
+| Olsztyn    |
+| Wejcherowo |
+| Warszawa   |
+| Sopot      |
+| Pabianice  |
++------------+
+5 rows in set (0.001 sec)
+
+MariaDB [sklep_db]> UPDATE Customers
+    -> SET city='Wa-wa'
+    -> WHERE city='Warszawa';
+Query OK, 1 row affected (0.006 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> SELECT * FROM Customers;
++-------------+---------------------+---------------------+------------+
+| customer_id | name                | adress              | city       |
++-------------+---------------------+---------------------+------------+
+|           1 | Jan Rybak           | Banacha 23          | Lodz       |
+|           2 | Urszula Nowak       | Sienkiewicza 234/45 | Wa-wa      |
+|           3 | Katarzyna Kowalska  | Kossaka 113         | Pabianice  |
+|           4 | Ewa Lipinska        | Mickiewicza 23      | Wroclaw    |
+|           5 | Marek Kucharski     | Kwiatowa 45/21      | Poznan     |
+|           6 | Marta Kucharska     | Akacjowa 1          | Sopot      |
+|           7 | Wojciech Drozd      | Lipowa 18           | Wejcherowo |
+|           8 | Piotr Wojciechowski | Bema 113/2          | Wadowice   |
+|           9 | Monika Grzemska     | Liliowa 457/3       | Olsztyn    |
+|          10 | Damian Budka        | Rowerowa 13         | Kielce     |
++-------------+---------------------+---------------------+------------+
+10 rows in set (0.001 sec)
+
+MariaDB [sklep_db]> UPDATE Customers
+    -> SET city='Warszawa'
+    -> WHERE city='Wa-wa';
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> SELECT * FROM Customers;
++-------------+---------------------+---------------------+------------+
+| customer_id | name                | adress              | city       |
++-------------+---------------------+---------------------+------------+
+|           1 | Jan Rybak           | Banacha 23          | Lodz       |
+|           2 | Urszula Nowak       | Sienkiewicza 234/45 | Warszawa   |
+|           3 | Katarzyna Kowalska  | Kossaka 113         | Pabianice  |
+|           4 | Ewa Lipinska        | Mickiewicza 23      | Wroclaw    |
+|           5 | Marek Kucharski     | Kwiatowa 45/21      | Poznan     |
+|           6 | Marta Kucharska     | Akacjowa 1          | Sopot      |
+|           7 | Wojciech Drozd      | Lipowa 18           | Wejcherowo |
+|           8 | Piotr Wojciechowski | Bema 113/2          | Wadowice   |
+|           9 | Monika Grzemska     | Liliowa 457/3       | Olsztyn    |
+|          10 | Damian Budka        | Rowerowa 13         | Kielce     |
++-------------+---------------------+---------------------+------------+
+10 rows in set (0.001 sec)
+
+MariaDB [sklep_db]> UPDATE Orders
+    -> SET date='2023-03-22'
+    -> WHERE order_id=2;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sklep_db]> SELECT * FROM Orders;
++----------+-------------+--------+------------+
+| order_id | customer_id | amount | date       |
++----------+-------------+--------+------------+
+|        1 |           2 |     88 | 2004-05-22 |
+|        2 |           1 |     33 | 2023-03-22 |
+|        3 |           2 |     21 | 2004-08-12 |
+|        4 |           8 |     11 | 2004-06-15 |
+|        5 |           3 |      6 | 2004-06-19 |
+|        6 |           6 |     24 | 2004-07-04 |
+|        7 |           5 |     90 | 2004-05-14 |
+|        8 |           7 |     65 | 2004-08-23 |
+|        9 |           3 |     45 | 2004-02-01 |
+|       10 |           9 |      2 | 2004-09-21 |
++----------+-------------+--------+------------+
+10 rows in set (0.001 sec)
+
+MariaDB [sklep_db]> DELETE FROM Orders
+    -> WHERE amount<10;
+Query OK, 2 rows affected (0.005 sec)
+
+MariaDB [sklep_db]> SELECT * FROM Orders;
++----------+-------------+--------+------------+
+| order_id | customer_id | amount | date       |
++----------+-------------+--------+------------+
+|        1 |           2 |     88 | 2004-05-22 |
+|        2 |           1 |     33 | 2023-03-22 |
+|        3 |           2 |     21 | 2004-08-12 |
+|        4 |           8 |     11 | 2004-06-15 |
+|        6 |           6 |     24 | 2004-07-04 |
+|        7 |           5 |     90 | 2004-05-14 |
+|        8 |           7 |     65 | 2004-08-23 |
+|        9 |           3 |     45 | 2004-02-01 |
++----------+-------------+--------+------------+
+8 rows in set (0.000 sec)
+
+MariaDB [sklep_db]> MariaDB [sklep_db]> ALTER TABLE Orders ADD COLUMN price FLOAT;
+Query OK, 0 rows affected (0.028 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [sklep_db]> DESCRIBE Orders;
++-------------+---------+------+-----+---------+----------------+
+| Field       | Type    | Null | Key | Default | Extra          |
++-------------+---------+------+-----+---------+----------------+
+| order_id    | int(11) | NO   | PRI | NULL    | auto_increment |
+| customer_id | int(11) | YES  | MUL | NULL    |                |
+| amount      | int(11) | YES  |     | NULL    |                |
+| date        | date    | YES  |     | NULL    |                |
+| price       | float   | YES  |     | NULL    |                |
++-------------+---------+------+-----+---------+----------------+
+5 rows in set (0.009 sec)
+
+MariaDB [sklep_db]> UPDATE Orders SET price=amount * 5.5;
+Query OK, 8 rows affected (0.021 sec)
+Rows matched: 8  Changed: 8  Warnings: 0
+
+MariaDB [sklep_db]> SELECT * FROM Orders;
++----------+-------------+--------+------------+-------+
+| order_id | customer_id | amount | date       | price |
++----------+-------------+--------+------------+-------+
+|        1 |           2 |     88 | 2004-05-22 |   484 |
+|        2 |           1 |     33 | 2023-03-22 | 181.5 |
+|        3 |           2 |     21 | 2004-08-12 | 115.5 |
+|        4 |           8 |     11 | 2004-06-15 |  60.5 |
+|        6 |           6 |     24 | 2004-07-04 |   132 |
+|        7 |           5 |     90 | 2004-05-14 |   495 |
+|        8 |           7 |     65 | 2004-08-23 | 357.5 |
+|        9 |           3 |     45 | 2004-02-01 | 247.5 |
++----------+-------------+--------+------------+-------+
+8 rows in set (0.002 sec)
+
+MariaDB [sklep_db]> SOURCE zam_posortowane.txt
++----------+-------------+--------+------------+-------+
+| order_id | customer_id | amount | date       | price |
++----------+-------------+--------+------------+-------+
+|        7 |           5 |     90 | 2004-05-14 |   495 |
+|        1 |           2 |     88 | 2004-05-22 |   484 |
+|        8 |           7 |     65 | 2004-08-23 | 357.5 |
+|        9 |           3 |     45 | 2004-02-01 | 247.5 |
+|        2 |           1 |     33 | 2023-03-22 | 181.5 |
+|        6 |           6 |     24 | 2004-07-04 |   132 |
+|        3 |           2 |     21 | 2004-08-12 | 115.5 |
+|        4 |           8 |     11 | 2004-06-15 |  60.5 |
++----------+-------------+--------+------------+-------+
+8 rows in set (0.008 sec)
+
+MariaDB [sklep_db]> EXIT
