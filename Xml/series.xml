@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:noNamespaceSchemaLocation="series.xsd">
+		<author sex="female">
+			<name>Vanessa</name>
+			<surname>Wicher</surname>
+		</author>
+		<series>
+			<serial ended="yes">
+				<title lang="EN">Sherlock</title>
+				<start>2010</start>
+				<finish>2017</finish>
+				<genre>Dramat</genre>
+				<genre>Kryminał</genre>
+				<description>
+					Sherlock potrafi odróżnić programistę komputerowego po krawacie, a pilota samolotów po jego kciuku. Ma niezwykły, jedyny na świecie analityczny umysł, który pozwala mu bezbłędnie rozwiązywać najtrudniejsze zagadki kryminalne. Kiedy w jego życiu pojawia się John Watson od razu widać, ze mężczyźni różnią się od siebie właściwie wszystkim. Okazuje się jednak, że intelekt Sherlocka razem z pragmatyzmem Johna tworzą niezrównane połączenie.
+				</description>
+				<image source="img/mini/sherlock.jpg">Sherlock</image>
+				<link source="https://www.imdb.com/title/tt1475582/?ref_=nv_sr_srsg_0_tt_8_nm_0_q_sherlock">imdb.com/sherlock</link>
+				<seasons>4</seasons>
+				<episodes>13</episodes>
+			</serial>
+
+			<serial ended="no">
+				<title lang="EN">Yellowstone</title>
+				<start>2018</start>
+				<finish>2023</finish>
+				<genre>Dramat</genre>
+				<genre>Western</genre>
+				<description>
+					Fabuła serialu "Yellowstone" skupia się na rodzinie Duttonów, która sprawuje kontrolę nad rozległym ranczem graniczącym z rezerwatem Indian, terenami deweloperów i parkiem narodowym Yellowstone. Każda za stron jest zainteresowana ziemią, której właścicielem jest John Dutton. Ten jednak zamierza za wszelką cenę bronić swojego dziedzictwa, wraz z pomocą swojej bezwzględnej córki Beth oraz trzech synów, Jamiego, Kayce’ego i Lee.
+				</description>
+				<image source="img/mini/yellowstone.jpg">Yellowstone</image>
+				<link source="https://www.filmweb.pl/serial/Yellowstone-2018-799265">filmweb.pl/yellowstone</link>
+				<seasons>5</seasons>
+				<episodes>53</episodes>
+			</serial>
+
+			<serial ended="no">
+				<title lang="EN">The Crown</title>
+				<start>2016</start>
+				<finish>2023</finish>
+				<genre>Biograficzny</genre>
+				<genre>Dramat</genre>
+				<description>
+					"The Crown" to historia dwóch z najsłynniejszych adresów świata - Pałacu Buckingham i 10 Downing Street oraz intryg i romansów kryjących się za ważnymi wydarzeniami, które wywarły decydujący wpływ na drugą połowę XX wieku. Dwa dwory pod jedną koroną.Po śmierci króla Jerzego VI nową władczynią Wielkiej Brytanii zostaje jego córka Elżbieta II. Kobieta obejmuje tron w momencie, kiedy imperium chyli się ku upadkowi.
+				</description>
+				<image source="img/mini/the_crown.jpg">The Crown</image>
+				<link source="https://www.imdb.com/title/tt4786824/?ref_=nv_sr_srsg_0_tt_8_nm_0_q_the%2520crown">imdb.com/the_crown</link>
+				<seasons>6</seasons>
+				<episodes>60</episodes>
+			</serial>
+
+			<serial ended="yes">
+				<title lang="EN">House M.D.</title>
+				<start>2004</start>
+				<finish>2012</finish>
+				<genre>Dramat</genre>
+				<genre>Komedia</genre>
+				<description>
+					Serial opowiada o "kryminalnych zagadkach medycznych", gdzie złoczyńcą i przestępcą są choroby, a detektywem - doktor Gregory House. Lekarz nie przebiera w środkach, nie udaje miłego człowieka, nie bardzo nawet lubi rozmawiać z pacjentami. Dla niego najważniejsza jest walka z chorobą. Dzięki fantastycznemu wyczuciu w diagnozowaniu i niekonwencjonalnemu sposobowi myślenia, zdobywa uznanie tak wśród pacjentów, jak i w środowisku lekarzy.
+				</description>
+				<image source="img/mini/house.jpg">House M.D.</image>
+				<link source="https://www.filmweb.pl/serial/Dr+House-2004-130177">filmweb.pl/house_M.D.</link>
+				<seasons>8</seasons>
+				<episodes>176</episodes>
+			</serial>
+
+			<serial ended="yes">
+				<title lang="EN">Downton Abbey</title>
+				<start>2010</start>
+				<finish>2015</finish>
+				<genre>Dramat</genre>
+				<genre>Kostiumowy</genre>
+				<description>
+					Akcja serialu rozgrywa się w trudnych i burzliwych czasach zarówno dla Anglii, jak  i dla całego świata.Opowieść o Downton Abbey to historia ludzi żyjących we dworze należącym do państwa Grantham i ich córek. Domem kierują kamerdyner Garson i ochmistrzyni, pani Hughes, a sprawne działanie tego skomplikowanego mechanizmu zapewnia  liczna służba.
+				</description>
+				<image source="img/mini/downton_abbey.jpg">Downton Abbey</image>
+				<link source="https://www.imdb.com/title/tt1606375/?ref_=nv_sr_srsg_0_tt_8_nm_0_q_downtown%2520abbe">imdb.com/downton_abbey</link>
+				<seasons>6</seasons>
+				<episodes>52</episodes>
+			</serial>
+		</series>
+		<parts>
+			<part main="yes">
+				<character sex="male">
+					Sherlock Holmes
+				</character>
+				<about>
+					Ekscentryczny geniusz dedukcji i detektywistyki znany w całej Europie. Obdarzony niezwykłym talentem, potrafi rozwiązać każdą zagadkę. Jest inteligentny, sprytny i przebiegły, potrafi logicznie myśleć, kojarzyć fakty, nadzwyczaj spostrzegawczy i przewidujący.
+				</about>
+				<actor>
+					Benedict Cumberbatch
+				</actor>
+				<quotation>
+					<quote nr="1">
+						Jeśli wyeliminujesz niemożliwe, reszta musi być prawdą.
+					</quote>
+					<quote nr="2">
+						Kiedy sprzedajesz kłamstwo, opakowujesz je w prawdę.
+					</quote>
+				</quotation>
+				<image source="img/images/sherlockholmes.jpg">Sherlock Holmes</image>
+			</part>
+
+			<part main="yes">
+				<character sex="male">
+					John Dutton
+				</character>
+				<about>
+					John Dutton jest właścicielem jednego z największych rancz bydła w Montanie, który musi stawić czoła przeszłości, rodzinie oraz politykom, aby obronić swoje ranczo przed bezwzględnymi deweloperami. Na jego drodze stoją również rdzenni mieszkańcy rezerwatu i inni wrogowie, którzy chcą kontrolować jego ziemię.
+				</about>
+				<actor>
+					Kevin Costner
+				</actor>
+				<quotation>
+					<quote nr="1">
+						To jest Ameryka. Nie dzielimy się tutaj ziemią.
+					</quote>	
+				</quotation>			
+				<image source="img/images/johndutton.jpg">John Dutton</image>
+			</part>
+
+			<part main="yes">
+				<character sex="female">
+					Elżbieta Windsor
+				</character>
+				<about>
+					Młodziutka, niespełna 25 - letnia Elżbieta II, która po śmierci króla Jerzego VI zostaje nową władczynią Wielkiej Brytanii. Kobieta obejmuje tron w momencie, kiedy imperium chyli się ku upadkowi. Elżbieta musi nauczyć się godzić ze sobą sprawy wielkiej polityki i życie prywatne. Nie przypuszcza, że będzie to aż tak trudne. Silna i stanowcza, miłośniczka psów rasy corgie.
+				</about>
+				<actor>
+					Claire Foy
+				</actor>
+				<image source="img/images/elisabeth.jpg">Elżbieta Windsor</image>
+			</part>
+			
+			<part main="yes">
+				<character sex="male">
+					Gregory House
+				</character>
+				<about>
+					Kierownik zespołu diagnostycznego szpitala, medyczny geniusz, który dzięki niekonwencjonalnym metodom i dedukcji osiąga niespotykane wyniki w diagnostyce.
+				</about>
+				<actor>
+					Hugh Laurie
+				</actor>
+				<quotation>
+					<quote nr="1">
+						Podstawowa prawda o ludziach jest taka że wszyscy kłamią, jedyna zmienna to to w jakiej sprawie.
+					</quote>
+					<quote nr="2">
+						Jeśli rozmawiasz z Bogiem, jesteś religijny. Kiedy Bóg przemawia do ciebie jesteś chory psychicznie.
+					</quote>
+				</quotation>
+				<image source="img/images/drhouse.jpg">Gregory House</image>
+			</part>
+
+			<part main="no">
+				<character sex="female">
+					Violet Crawley
+				</character>
+				<about>
+					Hrabina Grantham, matka Roberta i wdowa po poprzednim hrabim. Postać matriarchalna i bystra pomimo swojego wieku, symbolizuje „stary świat” i porządek z czasów przed I wojną światową.
+				</about>
+				<actor>
+					Maggie Smith
+				</actor>
+				<quotation>
+					<quote nr="1">
+						Nie mogłabym mieć prądu w domu, nie spałabym ani chwili. Wszystkie te opary unoszące się wokół.
+					</quote>
+					<quote nr="2">
+						Znasz mnie: nigdy nie narzekaj, nigdy nie wyjaśniaj.
+					</quote>
+					<quote nr="3">
+						Co to jest weekend?
+					</quote>
+				</quotation>
+				<image source="img/images/violetcrawley.jpg">Violet Crawley</image>
+			</part>
+		</parts>
+</page>

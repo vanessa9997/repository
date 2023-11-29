@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+	<xs:element name="page" type="pageType"/>
+	<xs:element name="image" type="addressType"/>
+	<xs:element name="link" type="addressType"/>
+
+	<xs:complexType name="pageType">
+		<xs:sequence>
+			<xs:element name="author" type="authorType" />
+			<xs:element name="series" type="seriesType" minOccurs="1"/>
+			<xs:choice>
+				<xs:element name="parts" type="partsType" minOccurs="1"/>
+				<xs:element name="adaptation" type ="xs:string" minOccurs="1"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="authorType">
+		<xs:sequence>
+			<xs:element name="name" type="nameType" />
+			<xs:element name="surname" type="nameType" />
+		</xs:sequence>
+		<xs:attribute ref="sex" use="optional" />
+	</xs:complexType>
+	
+	<xs:complexType name="seriesType">
+		<xs:sequence>
+			<xs:element name="serial" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="title">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="lang" type="xs:string" />
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="start" type="dateType"/>
+						<xs:element name="finish" type="dateType"/>
+						<xs:element name="genre" type="genreType" maxOccurs="unbounded"/>
+						<xs:element name="description" type="xs:string"/>
+						<xs:element ref="image" minOccurs="1"/>
+						<xs:element ref="link" maxOccurs="unbounded"/>
+						<xs:element name="seasons" type="seasonsType"/>
+						<xs:element name="episodes" type="episodesType"/>
+					</xs:sequence>
+					<xs:attribute name="ended" type="valueType" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="addressType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="source" type="xs:anyURI" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="partsType">
+		<xs:sequence>
+			<xs:element name="part" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="character" type="characterType" />
+						<xs:element name="about" type="xs:string"/>
+						<xs:element name="actor" type="xs:string"/>
+						<xs:element name="quotation" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="quote" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="xs:string">
+													<xs:attribute name="nr" type="xs:integer" use="required" />
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="image" minOccurs="1"/>
+					</xs:sequence>
+					<xs:attribute name="main" type="valueType" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="characterType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute ref="sex" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="valueType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="yes"/>
+			<xs:enumeration value="no"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="seasonsType">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="episodesType">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="2"/>
+			<xs:maxInclusive value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="genreType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="5"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="dateType">
+		<xs:restriction base="xs:gYear">
+			<xs:minInclusive value="2000"/>
+			<xs:maxInclusive value="2023"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="nameType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="5"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:attribute name="sex">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="male|female"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:attribute>
+
+</xs:schema>
